@@ -10,13 +10,12 @@ import CompetitorLogo from "./CompetitorLogo";
 import IntelReport from "./IntelReport";
 
 export default function StructuredMode() {
+  const [selectedCompetitor, setSelectedCompetitor] = useState<string>(COMPETITORS[0].slug);
   const [selectedServiceAreas, setSelectedServiceAreas] = useState<string[]>([]);
   const [outputType, setOutputType] = useState<OutputType>("full");
   const [context, setContext] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [report, setReport] = useState("");
-
-  const competitor = COMPETITORS[0]; // Vultr for now
 
   function toggleServiceArea(slug: string) {
     setSelectedServiceAreas((prev) =>
@@ -35,7 +34,7 @@ export default function StructuredMode() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mode: "structured",
-          competitors: [competitor.slug],
+          competitors: [selectedCompetitor],
           serviceAreas: selectedServiceAreas,
           outputType,
           context: context.trim() || undefined,
@@ -66,21 +65,33 @@ export default function StructuredMode() {
   return (
     <div className="flex flex-1 flex-col overflow-y-auto">
       <div className="mx-auto w-full max-w-4xl px-4 py-8 space-y-6">
-        {/* Competitor (fixed for now) */}
+        {/* Competitor Selection */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Competitor
           </label>
-          <div className="flex items-center gap-3 rounded-xl border border-zinc-700 bg-zinc-800/50 px-4 py-3">
-            <CompetitorLogo competitor={competitor} size={24} />
-            <span className="text-white font-medium">{competitor.name}</span>
-            <span className="ml-auto text-xs text-zinc-500">More competitors coming soon</span>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {COMPETITORS.map((comp) => (
+              <button
+                key={comp.slug}
+                type="button"
+                onClick={() => setSelectedCompetitor(comp.slug)}
+                className={`flex items-center gap-3 rounded-xl border px-4 py-3 transition-colors ${
+                  selectedCompetitor === comp.slug
+                    ? "border-[#C8102E] bg-[#C8102E]/5 text-gray-900 shadow-sm"
+                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:text-gray-900"
+                }`}
+              >
+                <CompetitorLogo competitor={comp} size={24} />
+                <span className="font-medium">{comp.name}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Service Areas */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Service Areas
           </label>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
@@ -91,8 +102,8 @@ export default function StructuredMode() {
                 onClick={() => toggleServiceArea(sa.slug)}
                 className={`rounded-xl border px-3 py-2.5 text-left text-sm transition-colors ${
                   selectedServiceAreas.includes(sa.slug)
-                    ? "border-[#C8102E] bg-[#C8102E]/10 text-white"
-                    : "border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:border-zinc-600 hover:text-zinc-300"
+                    ? "border-[#C8102E] bg-[#C8102E]/5 text-gray-900 font-medium"
+                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:text-gray-900"
                 }`}
               >
                 {sa.name}
@@ -106,12 +117,12 @@ export default function StructuredMode() {
                 return (
                   <span
                     key={slug}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-zinc-800 border border-zinc-700 px-3 py-1 text-xs text-zinc-300"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-[#C8102E]/5 border border-[#C8102E]/20 px-3 py-1 text-xs text-[#C8102E]"
                   >
                     {sa.name}
                     <button
                       onClick={() => toggleServiceArea(slug)}
-                      className="ml-0.5 text-zinc-500 hover:text-white"
+                      className="ml-0.5 text-[#C8102E]/50 hover:text-[#C8102E]"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -124,7 +135,7 @@ export default function StructuredMode() {
 
         {/* Output Type */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Report Type
           </label>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -135,12 +146,12 @@ export default function StructuredMode() {
                 onClick={() => setOutputType(ot.slug)}
                 className={`rounded-xl border px-4 py-3 text-left transition-colors ${
                   outputType === ot.slug
-                    ? "border-[#C8102E] bg-[#C8102E]/10 text-white"
-                    : "border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:border-zinc-600 hover:text-zinc-300"
+                    ? "border-[#C8102E] bg-[#C8102E]/5 text-gray-900 shadow-sm"
+                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:text-gray-900"
                 }`}
               >
                 <div className="text-sm font-medium">{ot.name}</div>
-                <div className="mt-0.5 text-xs opacity-70">{ot.description}</div>
+                <div className="mt-0.5 text-xs text-gray-400">{ot.description}</div>
               </button>
             ))}
           </div>
@@ -148,15 +159,15 @@ export default function StructuredMode() {
 
         {/* Context */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">
-            Deal Context <span className="text-zinc-500">(optional)</span>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            Deal Context <span className="text-gray-400">(optional)</span>
           </label>
           <textarea
             value={context}
             onChange={(e) => setContext(e.target.value)}
             placeholder="E.g., Healthcare company, 500 employees, needs HIPAA compliance, currently on-prem..."
             rows={2}
-            className="w-full resize-none rounded-xl border border-zinc-700 bg-zinc-800/50 px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-[#C8102E] focus:outline-none focus:ring-1 focus:ring-[#C8102E]"
+            className="w-full resize-none rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#C8102E] focus:outline-none focus:ring-1 focus:ring-[#C8102E]"
           />
         </div>
 

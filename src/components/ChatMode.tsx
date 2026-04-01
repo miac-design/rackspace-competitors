@@ -84,20 +84,20 @@ export default function ChatMode() {
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
         {messages.length === 0 && !isLoading && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <Bot className="h-12 w-12 text-zinc-600 mb-4" />
-            <h2 className="text-xl font-semibold text-white mb-2">
+            <Bot className="h-12 w-12 text-gray-300 mb-4" />
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
               Ask me anything about the competition
             </h2>
-            <p className="text-zinc-400 max-w-md text-sm">
+            <p className="text-gray-500 max-w-md text-sm">
               Try something like: &quot;I&apos;m up against Vultr on a bare metal
               deal for a fintech company&quot;
             </p>
             <div className="mt-6 flex flex-wrap gap-2 justify-center max-w-lg">
               {[
                 "How does Rackspace compare to Vultr on bare metal?",
-                "What are Vultr's weaknesses in managed services?",
+                "What are OVHcloud's weaknesses?",
                 "Help me handle pricing objections vs Vultr",
-                "Rackspace vs Vultr for enterprise Kubernetes",
+                "Rackspace vs OVHcloud for enterprise Kubernetes",
               ].map((suggestion) => (
                 <button
                   key={suggestion}
@@ -105,7 +105,7 @@ export default function ChatMode() {
                     setInput(suggestion);
                     inputRef.current?.focus();
                   }}
-                  className="rounded-full border border-zinc-700 px-3 py-1.5 text-xs text-zinc-400 hover:border-[#C8102E] hover:text-white transition-colors"
+                  className="rounded-full border border-gray-300 px-3 py-1.5 text-xs text-gray-600 hover:border-[#C8102E] hover:text-[#C8102E] transition-colors"
                 >
                   {suggestion}
                 </button>
@@ -118,10 +118,10 @@ export default function ChatMode() {
           <div key={i} className="max-w-4xl mx-auto">
             {msg.role === "user" ? (
               <div className="flex gap-3 items-start">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-700">
-                  <User className="h-4 w-4 text-zinc-300" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-200">
+                  <User className="h-4 w-4 text-gray-600" />
                 </div>
-                <div className="rounded-xl bg-zinc-800 px-4 py-3 text-zinc-200 text-sm">
+                <div className="rounded-xl bg-gray-100 px-4 py-3 text-gray-800 text-sm">
                   {msg.content}
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function ChatMode() {
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#C8102E]">
               <Bot className="h-4 w-4 text-white" />
             </div>
-            <div className="flex items-center gap-2 text-zinc-400 text-sm px-4 py-3">
+            <div className="flex items-center gap-2 text-gray-500 text-sm px-4 py-3">
               <Loader2 className="h-4 w-4 animate-spin" />
               Analyzing competitive landscape...
             </div>
@@ -164,7 +164,7 @@ export default function ChatMode() {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="border-t border-zinc-800 bg-[#1a1714] p-4">
+      <div className="border-t border-gray-200 bg-white p-4">
         <form onSubmit={handleSubmit} className="mx-auto max-w-4xl">
           <div className="flex gap-3 items-end">
             <textarea
@@ -174,7 +174,7 @@ export default function ChatMode() {
               onKeyDown={handleKeyDown}
               placeholder="Describe your competitive situation..."
               rows={1}
-              className="flex-1 resize-none rounded-xl border border-zinc-700 bg-zinc-800/50 px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-[#C8102E] focus:outline-none focus:ring-1 focus:ring-[#C8102E]"
+              className="flex-1 resize-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#C8102E] focus:outline-none focus:ring-1 focus:ring-[#C8102E]"
             />
             <button
               type="submit"

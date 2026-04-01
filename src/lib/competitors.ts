@@ -7,6 +7,12 @@ export const COMPETITORS: Competitor[] = [
     logoUrl: "https://cdn.simpleicons.org/vultr/007BFC",
     color: "#007BFC",
   },
+  {
+    slug: "ovhcloud",
+    name: "OVHcloud",
+    logoUrl: "https://cdn.simpleicons.org/ovh/123F6D",
+    color: "#123F6D",
+  },
 ];
 
 export function getCompetitorBySlug(slug: string): Competitor | undefined {

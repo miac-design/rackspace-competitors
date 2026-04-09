@@ -12,7 +12,7 @@ const RESOURCES = [
       { title: "Rackspace Kubernetes", url: "https://www.rackspace.com/cloud/kubernetes" },
       { title: "Private Cloud Solutions", url: "https://www.rackspace.com/cloud/private" },
       { title: "Compliance & Security", url: "https://www.rackspace.com/security" },
-      { title: "Fanatical Experience™", url: "https://www.rackspace.com/why-rackspace" },
+      { title: "Fanatical Experience\u2122", url: "https://www.rackspace.com/why-rackspace" },
     ],
   },
   {
@@ -42,35 +42,36 @@ export default function ResourcesPanel() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="mx-auto flex items-center gap-2 rounded-t-lg bg-white border border-b-0 border-gray-200 px-5 py-2 text-sm font-medium text-gray-700 hover:text-[#C8102E] transition-colors shadow-sm"
-        style={{ marginLeft: "50%", transform: "translateX(-50%)" }}
-      >
-        <BookOpen className="h-4 w-4" />
-        Resources & References
-        {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center gap-2 rounded-t-xl bg-white border border-b-0 border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-500 hover:text-[#C8102E] transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          <BookOpen className="h-4 w-4" />
+          Resources & References
+          {isOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronUp className="h-3.5 w-3.5" />}
+        </button>
+      </div>
 
       {isOpen && (
-        <div className="bg-white border-t border-gray-200 shadow-lg max-h-80 overflow-y-auto">
+        <div className="bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] max-h-80 overflow-y-auto animate-fade-in-up">
           <div className="mx-auto max-w-7xl px-6 py-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {RESOURCES.map((section) => (
                 <div key={section.category}>
-                  <h3 className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                  <h3 className="text-xs font-bold text-gray-400 mb-3 uppercase tracking-widest">
                     {section.category}
                   </h3>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2.5">
                     {section.items.map((item) => (
                       <li key={item.title}>
                         <a
                           href={item.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#C8102E] transition-colors"
+                          className="group flex items-center gap-2 text-sm text-gray-500 hover:text-[#C8102E] transition-colors"
                         >
-                          <ExternalLink className="h-3 w-3 shrink-0" />
+                          <ExternalLink className="h-3 w-3 shrink-0 opacity-40 group-hover:opacity-100 transition-opacity" />
                           {item.title}
                         </a>
                       </li>

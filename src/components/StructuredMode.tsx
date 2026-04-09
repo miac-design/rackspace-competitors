@@ -6,6 +6,7 @@ import {
   Cpu, Container, Database, Shield, Headset, CloudCog,
   Server, Network, HardDrive, GitBranch, Brain, MoveRight,
   FileText, ArrowLeftRight, TrendingUp, Target, MessageCircle, DollarSign,
+  Mail, ShieldCheck, Building2, Cloud, BarChart3, AppWindow,
 } from "lucide-react";
 import { COMPETITORS } from "@/lib/competitors";
 import { SERVICE_AREAS } from "@/lib/service-areas";
@@ -18,6 +19,7 @@ import IntelReport from "./IntelReport";
 const SERVICE_ICON_MAP: Record<string, React.ElementType> = {
   Cpu, Container, Database, Shield, Headset, CloudCog,
   Server, Network, HardDrive, GitBranch, Brain, MoveRight,
+  Mail, ShieldCheck, Building2, Cloud, BarChart3, AppWindow,
 };
 
 const OUTPUT_ICON_MAP: Record<string, React.ElementType> = {
@@ -94,7 +96,7 @@ export default function StructuredMode() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#C8102E] text-[10px] font-bold text-white">1</span>
             <label className="text-sm font-semibold text-gray-800">Select Competitor</label>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="flex flex-wrap gap-2">
             {COMPETITORS.map((comp) => {
               const isSelected = selectedCompetitor === comp.slug;
               return (
@@ -102,17 +104,14 @@ export default function StructuredMode() {
                   key={comp.slug}
                   type="button"
                   onClick={() => setSelectedCompetitor(comp.slug)}
-                  className={`relative flex items-center gap-3 rounded-xl border-2 px-4 py-3 transition-all duration-200 ${
+                  className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-all duration-200 ${
                     isSelected
-                      ? "border-[#C8102E] bg-white text-gray-900 shadow-md shadow-red-100/40"
-                      : "border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:shadow-sm"
+                      ? "border-[#C8102E] bg-[#C8102E]/5 text-gray-900 font-semibold shadow-sm"
+                      : "border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   }`}
                 >
-                  <CompetitorLogo competitor={comp} size={28} />
-                  <span className="font-semibold text-sm">{comp.name}</span>
-                  {isSelected && (
-                    <span className="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-[#C8102E]" />
-                  )}
+                  <CompetitorLogo competitor={comp} size={18} />
+                  <span>{comp.name}</span>
                 </button>
               );
             })}

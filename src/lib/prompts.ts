@@ -48,22 +48,22 @@ export function buildStructuredPrompt(
   const serviceAreaList = serviceAreas.join(", ");
 
   const sections: Record<OutputType, string> = {
-    full: `Provide a complete competitive battle card with ALL of the following sections:
+    full: `Provide a complete competitive battle card with ALL of the following sections. Keep each section focused and concise (3-5 bullet points max per section, not exhaustive lists):
 
-## Head-to-Head Feature Comparison
-A markdown table comparing Rackspace vs each competitor across key capabilities in the selected service areas.
+## Feature Comparison
+A markdown table comparing Rackspace vs each competitor across the TOP 6-8 most important capabilities in the selected service areas. Keep it focused.
 
-## Rackspace Strengths to Emphasize
-Bullet points of specific advantages Rackspace has over these competitors.
+## Key Strengths
+The TOP 4-5 most impactful Rackspace advantages. Each should be one strong sentence with a bold lead-in.
 
-## Competitor Weaknesses to Exploit
-Specific gaps, limitations, or known pain points for each competitor.
+## Competitor Gaps
+The TOP 3-4 most exploitable competitor weaknesses. Be specific and actionable.
 
 ## Objection Handling
-Common objections a prospect might raise about choosing Rackspace over these competitors, with recommended responses.
+The TOP 3 most common objections with concise responses. Format each as: **"Objection"** followed by the response.
 
-## Pricing Positioning
-How to position Rackspace pricing relative to each competitor, including value propositions that justify any premium.`,
+## Pricing Strategy
+A brief 3-4 point pricing positioning summary. Focus on TCO and value, not just price.`,
 
     comparison: `Provide a detailed markdown table comparing Rackspace vs each competitor (${competitorList}) across key capabilities in ${serviceAreaList}. Include specific product names, service tiers, and feature availability (Yes/No/Partial).`,
 

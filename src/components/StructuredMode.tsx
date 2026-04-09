@@ -13,7 +13,9 @@ import { SERVICE_AREAS } from "@/lib/service-areas";
 import { OUTPUT_TYPES } from "@/lib/output-types";
 import { OutputType } from "@/types";
 import CompetitorLogo from "./CompetitorLogo";
+import StructuredReport from "./StructuredReport";
 import IntelReport from "./IntelReport";
+import { getCompetitorScores } from "@/lib/competitor-scores";
 
 // Map icon name strings to actual Lucide components
 const SERVICE_ICON_MAP: Record<string, React.ElementType> = {
@@ -258,7 +260,16 @@ export default function StructuredMode() {
         {/* Report */}
         {report && (
           <div className="pt-2 animate-fade-in-up">
-            <IntelReport content={report} isStreaming={isLoading} />
+            {outputType === "full" && selectedCompData ? (
+              <StructuredReport
+                content={report}
+                isStreaming={isLoading}
+                competitorName={selectedCompData.name}
+                scores={getCompetitorScores(selectedCompetitor)}
+              />
+            ) : (
+              <IntelReport content={report} isStreaming={isLoading} />
+            )}
           </div>
         )}
       </div>

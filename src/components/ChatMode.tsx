@@ -111,10 +111,10 @@ export default function ChatMode() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
         {/* Empty state */}
         {isEmpty && (
-          <div className="flex flex-col items-center justify-center py-8 text-center animate-fade-in">
+          <div className="flex flex-col items-center justify-center h-full text-center animate-fade-in">
             {/* Icon with glow */}
             <div className="relative mb-4">
               <div className="absolute inset-0 rounded-xl bg-[#C8102E]/10 blur-xl scale-150" />

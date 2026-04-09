@@ -157,11 +157,11 @@ const CHAT_RESPONSES: Record<string, string> = {
 
 | Feature | Rackspace | Vultr | OVHcloud |
 |---|---|---|---|
-| Managed OS & Patching | ✅ | ❌ | ❌ |
-| 24/7 Expert Support | ✅ | ❌ | ⚠️ Premium only |
-| Hardware Monitoring | ✅ Proactive | ❌ Self-service | ⚠️ Basic |
+| Managed OS & Patching | Yes | No | No |
+| 24/7 Expert Support | Yes | No | Partial — Premium only |
+| Hardware Monitoring | Yes — Proactive | No — Self-service | Partial — Basic |
 | Compliance Certs | SOC/PCI/HIPAA/FedRAMP | SOC 2 only | EU-focused |
-| Custom Configs | ✅ | Limited | ✅ |
+| Custom Configs | Yes | Limited | Yes |
 | Pricing | Premium (managed) | Low | Very low |
 
 ### Key Talking Points
@@ -185,12 +185,12 @@ Rackspace offers **fully managed Kubernetes** — not just a hosted control plan
 
 | Feature | Rackspace KaaS | Vultr Kubernetes Engine | OVHcloud Managed K8s |
 |---|---|---|---|
-| Control Plane Management | ✅ Managed | ✅ Managed | ✅ Managed |
-| Worker Node Management | ✅ Managed | ❌ Self-service | ❌ Self-service |
-| Cluster Upgrades | ✅ Managed | ❌ Self-service | ⚠️ Semi-automated |
-| Security Patching | ✅ Proactive | ❌ Self-service | ❌ Self-service |
-| 24/7 K8s Expert Support | ✅ | ❌ | ❌ |
-| Multi-Cloud K8s | ✅ (AWS EKS, AKS, GKE) | ❌ Vultr only | ❌ OVH only |
+| Control Plane Management | Yes — Managed | Yes — Managed | Yes — Managed |
+| Worker Node Management | Yes — Managed | No — Self-service | No — Self-service |
+| Cluster Upgrades | Yes — Managed | No — Self-service | Partial — Semi-automated |
+| Security Patching | Yes — Proactive | No — Self-service | No — Self-service |
+| 24/7 K8s Expert Support | Yes | No | No |
+| Multi-Cloud K8s | Yes (AWS EKS, AKS, GKE) | No — Vultr only | No — OVH only |
 | Compliance | SOC/PCI/HIPAA | SOC 2 | EU certs |
 
 ### Key Message
@@ -214,13 +214,13 @@ Rackspace's **Fanatical Experience™** goes far beyond basic monitoring:
 
 | Capability | Rackspace | Vultr | OVHcloud |
 |---|---|---|---|
-| Managed OS | ✅ | ❌ | ❌ |
-| Managed Databases | ✅ | ❌ | ⚠️ Basic |
-| Managed Security | ✅ | ❌ | ❌ |
-| Managed Kubernetes | ✅ | ❌ | ⚠️ Control plane only |
-| Dedicated Account Team | ✅ | ❌ | ❌ |
-| Proactive Monitoring | ✅ | ❌ | ⚠️ Basic |
-| Compliance Consulting | ✅ | ❌ | ❌ |
+| Managed OS | Yes | No | No |
+| Managed Databases | Yes | No | Partial — Basic |
+| Managed Security | Yes | No | No |
+| Managed Kubernetes | Yes | No | Partial — Control plane only |
+| Dedicated Account Team | Yes | No | No |
+| Proactive Monitoring | Yes | No | Partial — Basic |
+| Compliance Consulting | Yes | No | No |
 
 ### The Bottom Line
 "Vultr and OVHcloud are infrastructure providers. Rackspace is a managed cloud partner. That's a fundamental difference in how your team operates day-to-day."`,

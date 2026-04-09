@@ -27,7 +27,8 @@ Important guidelines:
 - Include real product names, pricing tiers, and service levels where known
 - Acknowledge competitor strengths honestly, then pivot to Rackspace advantages
 - Format output cleanly with markdown headers (##), tables, and bullet points
-- When discussing pricing, note that Rackspace managed services are an investment in operational excellence, not just infrastructure cost`;
+- When discussing pricing, note that Rackspace managed services are an investment in operational excellence, not just infrastructure cost
+- NEVER use emoji icons or Unicode symbols (no ✅, ❌, ⚠️, ✓, ✗, 🔒, etc.). Instead use plain text: "Yes", "No", "Partial", "Limited", "N/A". The UI will render appropriate icons automatically.`;
 
 export function buildStructuredPrompt(
   competitorSlugs: string[],
@@ -64,7 +65,7 @@ Common objections a prospect might raise about choosing Rackspace over these com
 ## Pricing Positioning
 How to position Rackspace pricing relative to each competitor, including value propositions that justify any premium.`,
 
-    comparison: `Provide a detailed markdown table comparing Rackspace vs each competitor (${competitorList}) across key capabilities in ${serviceAreaList}. Include specific product names, service tiers, and feature availability (\u2705/\u274c/\u26a0\ufe0f partial).`,
+    comparison: `Provide a detailed markdown table comparing Rackspace vs each competitor (${competitorList}) across key capabilities in ${serviceAreaList}. Include specific product names, service tiers, and feature availability (Yes/No/Partial).`,
 
     strengths: `List the specific strengths and advantages Rackspace has over ${competitorList} in ${serviceAreaList}. For each strength, explain why it matters to the customer and how to articulate it in a sales conversation.`,
 

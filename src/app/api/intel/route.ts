@@ -32,7 +32,9 @@ Rackspace key differentiators:
 - 25+ years of hosting and cloud experience
 - Bare metal and private cloud options
 - Professional and managed services for Kubernetes, databases, and security
-- Global data center footprint`;
+- Global data center footprint
+
+NEVER use emoji icons or Unicode symbols (no ✅, ❌, ⚠️, ✓, ✗, etc.). Use plain text: "Yes", "No", "Partial", "Limited", "N/A".`;
 
 function streamText(text: string): Response {
   const encoder = new TextEncoder();

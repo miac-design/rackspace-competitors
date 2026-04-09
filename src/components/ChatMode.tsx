@@ -114,30 +114,29 @@ export default function ChatMode() {
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
         {/* Empty state */}
         {isEmpty && (
-          <div className="flex flex-col items-center justify-center py-16 text-center animate-fade-in">
+          <div className="flex flex-col items-center justify-center py-8 text-center animate-fade-in">
             {/* Icon with glow */}
-            <div className="relative mb-6">
-              <div className="absolute inset-0 rounded-2xl bg-[#C8102E]/10 blur-xl scale-150" />
-              <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#C8102E] to-[#a00d24] shadow-lg shadow-red-200/40">
-                <Sparkles className="h-7 w-7 text-white" />
+            <div className="relative mb-4">
+              <div className="absolute inset-0 rounded-xl bg-[#C8102E]/10 blur-xl scale-150" />
+              <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#C8102E] to-[#a00d24] shadow-lg shadow-red-200/40">
+                <Sparkles className="h-5 w-5 text-white" />
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight">
+            <h2 className="text-xl font-bold text-gray-900 mb-1.5 tracking-tight">
               Ask me anything about the competition
             </h2>
             <p className="text-gray-500 max-w-md text-sm leading-relaxed">
               Get instant competitive intelligence, battle cards, and talk tracks.
-              Powered by AI trained on Rackspace positioning.
             </p>
 
             {/* Suggestion cards */}
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl w-full stagger-children">
+            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-xl w-full stagger-children">
               {SUGGESTIONS.map((suggestion) => (
                 <button
                   key={suggestion.query}
                   onClick={() => handleSuggestionClick(suggestion.query)}
-                  className="group animate-fade-in-up flex flex-col items-start gap-1 rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-left transition-all duration-200 hover:border-[#C8102E]/30 hover:shadow-md hover:shadow-red-100/30 hover:-translate-y-0.5"
+                  className="group animate-fade-in-up flex flex-col items-start gap-0.5 rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-left transition-all duration-200 hover:border-[#C8102E]/30 hover:shadow-md hover:shadow-red-100/30 hover:-translate-y-0.5"
                 >
                   <div className="flex items-center gap-2 w-full">
                     <span className="text-sm font-semibold text-gray-800 group-hover:text-[#C8102E] transition-colors">

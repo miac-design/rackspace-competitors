@@ -6,9 +6,11 @@ import ModeToggle from "@/components/ModeToggle";
 import ChatMode from "@/components/ChatMode";
 import StructuredMode from "@/components/StructuredMode";
 import ResourcesPanel from "@/components/ResourcesPanel";
+import { COMPETITORS } from "@/lib/competitors";
 
 export default function Home() {
   const [mode, setMode] = useState<"chat" | "structured">("chat");
+  const [selectedCompetitor, setSelectedCompetitor] = useState<string>(COMPETITORS[0].slug);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f8f9fb]">
@@ -17,9 +19,16 @@ export default function Home() {
         <ModeToggle mode={mode} onModeChange={setMode} />
       </div>
       <main className="flex flex-1 flex-col overflow-hidden">
-        {mode === "chat" ? <ChatMode /> : <StructuredMode />}
+        {mode === "chat" ? (
+          <ChatMode />
+        ) : (
+          <StructuredMode
+            selectedCompetitor={selectedCompetitor}
+            onCompetitorChange={setSelectedCompetitor}
+          />
+        )}
       </main>
-      <ResourcesPanel />
+      <ResourcesPanel selectedCompetitor={selectedCompetitor} />
     </div>
   );
 }

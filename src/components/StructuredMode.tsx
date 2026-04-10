@@ -33,8 +33,12 @@ const OUTPUT_ICON_MAP: Record<string, React.ElementType> = {
   pricing: DollarSign,
 };
 
-export default function StructuredMode() {
-  const [selectedCompetitor, setSelectedCompetitor] = useState<string>(COMPETITORS[0].slug);
+interface StructuredModeProps {
+  selectedCompetitor: string;
+  onCompetitorChange: (slug: string) => void;
+}
+
+export default function StructuredMode({ selectedCompetitor, onCompetitorChange }: StructuredModeProps) {
   const [selectedServiceAreas, setSelectedServiceAreas] = useState<string[]>([]);
   const [outputType, setOutputType] = useState<OutputType>("full");
   const [context, setContext] = useState("");
@@ -105,7 +109,7 @@ export default function StructuredMode() {
                 <button
                   key={comp.slug}
                   type="button"
-                  onClick={() => setSelectedCompetitor(comp.slug)}
+                  onClick={() => onCompetitorChange(comp.slug)}
                   className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-all duration-200 ${
                     isSelected
                       ? "border-[#C8102E] bg-[#C8102E]/5 text-gray-900 font-semibold shadow-sm"

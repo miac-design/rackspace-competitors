@@ -16,8 +16,8 @@ interface RadarChartProps {
 const MAX_SCORE = 10;
 const RINGS = 5;
 const CENTER = 200;
-const RADIUS = 150;
-const LABEL_OFFSET = 28;
+const RADIUS = 130;
+const LABEL_OFFSET = 24;
 
 function polarToCartesian(angle: number, radius: number): { x: number; y: number } {
   // Start from top (-90 degrees)
@@ -53,8 +53,8 @@ export default function RadarChart({ dimensions, competitorName }: RadarChartPro
   const competitorPoints = buildPolygonPoints(competitorValues, count);
 
   return (
-    <div className="w-full max-w-[400px] mx-auto">
-      <svg viewBox="0 0 400 440" className="w-full h-auto">
+    <div className="w-full max-w-[460px] mx-auto">
+      <svg viewBox="-30 -10 460 440" className="w-full h-auto overflow-visible">
         {/* Background rings */}
         {Array.from({ length: RINGS }, (_, i) => {
           const r = ((i + 1) / RINGS) * RADIUS;
@@ -171,7 +171,7 @@ export default function RadarChart({ dimensions, competitorName }: RadarChartPro
         })}
 
         {/* Legend */}
-        <g transform="translate(100, 410)">
+        <g transform="translate(100, 390)">
           <rect x="0" y="0" width="14" height="14" rx="3" fill="#C8102E" fillOpacity="0.8" />
           <text x="20" y="11" className="fill-gray-700" style={{ fontSize: "12px" }}>
             Rackspace

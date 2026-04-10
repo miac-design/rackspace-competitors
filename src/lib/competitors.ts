@@ -49,6 +49,36 @@ export const COMPETITORS: Competitor[] = [
     logoUrl: "https://cdn.simpleicons.org/equinixmetal/ED2224",
     color: "#ED2224",
   },
+  {
+    slug: "azure",
+    name: "Microsoft Azure",
+    logoUrl: "https://cdn.simpleicons.org/microsoftazure/0078D4",
+    color: "#0078D4",
+  },
+  {
+    slug: "ibmcloud",
+    name: "IBM Cloud",
+    logoUrl: "https://cdn.simpleicons.org/ibmcloud/1261FE",
+    color: "#1261FE",
+  },
+  {
+    slug: "oci",
+    name: "Oracle Cloud (OCI)",
+    logoUrl: "https://cdn.simpleicons.org/oracle/F80000",
+    color: "#F80000",
+  },
+  {
+    slug: "cloudflare",
+    name: "Cloudflare",
+    logoUrl: "https://cdn.simpleicons.org/cloudflare/F38020",
+    color: "#F38020",
+  },
+  {
+    slug: "leaseweb",
+    name: "Leaseweb",
+    logoUrl: "https://cdn.simpleicons.org/leaseweb/E22D30",
+    color: "#E22D30",
+  },
 ];
 
 export function getCompetitorBySlug(slug: string): Competitor | undefined {

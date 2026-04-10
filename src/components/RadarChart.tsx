@@ -163,8 +163,9 @@ export default function RadarChart({ dimensions, competitorName }: RadarChartPro
               x={x}
               y={y + dy}
               textAnchor={textAnchor}
-              className="text-xs fill-gray-600"
-              style={{ fontSize: "11px" }}
+              fill="#4b5563"
+              fontSize="13"
+              fontFamily="system-ui, -apple-system, sans-serif"
             >
               {dim.label}
             </text>
@@ -174,11 +175,11 @@ export default function RadarChart({ dimensions, competitorName }: RadarChartPro
         {/* Legend */}
         <g transform="translate(150, 370)">
           <rect x="0" y="0" width="14" height="14" rx="3" fill="#C8102E" fillOpacity="0.8" />
-          <text x="20" y="11" className="fill-gray-700" style={{ fontSize: "12px" }}>
+          <text x="20" y="11" fill="#374151" fontSize="13" fontFamily="system-ui, -apple-system, sans-serif">
             Rackspace
           </text>
-          <rect x="110" y="0" width="14" height="14" rx="3" fill="#3B82F6" fillOpacity="0.8" />
-          <text x="130" y="11" className="fill-gray-700" style={{ fontSize: "12px" }}>
+          <rect x="120" y="0" width="14" height="14" rx="3" fill="#3B82F6" fillOpacity="0.8" />
+          <text x="140" y="11" fill="#374151" fontSize="13" fontFamily="system-ui, -apple-system, sans-serif">
             {competitorName}
           </text>
         </g>

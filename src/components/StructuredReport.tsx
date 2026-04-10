@@ -100,13 +100,22 @@ export default function StructuredReport({
             competitorScore={scores.competitorOverall}
             competitorName={competitorName}
           />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-            <div className="rounded-xl border border-gray-100 bg-white p-4">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Competitive Radar</h3>
-              <RadarChart
-                dimensions={scores.dimensions}
-                competitorName={competitorName}
-              />
+          <div className="space-y-4">
+            <div className="rounded-xl border border-gray-100 bg-white p-6">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Competitive Radar</h3>
+                {scores.lastUpdated && (
+                  <span className="text-[10px] font-medium text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
+                    Updated {scores.lastUpdated}
+                  </span>
+                )}
+              </div>
+              <div className="max-w-xl mx-auto">
+                <RadarChart
+                  dimensions={scores.dimensions}
+                  competitorName={competitorName}
+                />
+              </div>
             </div>
             <div className="rounded-xl border border-gray-100 bg-white p-4">
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Category Scores</h3>
@@ -135,6 +144,7 @@ export default function StructuredReport({
             opportunities={scores.swot.opportunities}
             threats={scores.swot.threats}
             competitorName={competitorName}
+            sources={scores.sources}
           />
         </div>
       ),
@@ -144,7 +154,7 @@ export default function StructuredReport({
       label: "Radar",
       icon: <Radar className="h-3.5 w-3.5" />,
       content: (
-        <div className="max-w-md mx-auto rounded-xl border border-gray-100 bg-white p-5">
+        <div className="max-w-xl mx-auto rounded-xl border border-gray-100 bg-white p-5">
           <RadarChart
             dimensions={scores.dimensions}
             competitorName={competitorName}

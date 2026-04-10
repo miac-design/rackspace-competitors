@@ -1,6 +1,11 @@
 // Competitive scoring data for visual charts
 // Scores are 0-10 based on publicly available positioning
 
+export interface SourceRef {
+  title: string;
+  url: string;
+}
+
 export interface CompetitorScores {
   dimensions: { label: string; rackspace: number; competitor: number }[];
   swot: {
@@ -12,103 +17,121 @@ export interface CompetitorScores {
   verdict: string;
   rackspaceOverall: number;
   competitorOverall: number;
+  lastUpdated?: string;
+  sources?: SourceRef[];
 }
 
 const SCORES: Record<string, CompetitorScores> = {
   vultr: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 2 },
-      { label: "Enterprise Support", rackspace: 10, competitor: 3 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 2 },
+      { label: "Enterprise Spt.", rackspace: 10, competitor: 3 },
       { label: "Compliance", rackspace: 9, competitor: 4 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 2 },
       { label: "Pricing", rackspace: 5, competitor: 9 },
       { label: "Global Reach", rackspace: 8, competitor: 7 },
       { label: "Bare Metal", rackspace: 8, competitor: 6 },
-      { label: "Developer Experience", rackspace: 6, competitor: 8 },
+      { label: "Developer Exp.", rackspace: 6, competitor: 8 },
     ],
     swot: {
       strengths: [
-        "Fanatical Experience\u2122 \u2014 unmatched 24/7 managed services",
-        "Full-stack management: OS, DB, K8s, security",
-        "Enterprise compliance portfolio (SOC, PCI, HIPAA, FedRAMP)",
-        "Multi-cloud expertise across AWS, Azure, GCP",
-        "25+ years enterprise track record",
+        "Fanatical Experience\u2122 \u2014 unmatched 24/7 managed services [1]",
+        "Full-stack management: OS, DB, K8s, security [1]",
+        "Enterprise compliance portfolio (SOC, PCI, HIPAA, FedRAMP) [3]",
+        "Multi-cloud expertise across AWS, Azure, GCP [5]",
+        "25+ years enterprise track record [1]",
       ],
       weaknesses: [
-        "Higher price point than Vultr on raw infrastructure",
-        "Less self-service/developer-focused tooling",
-        "Smaller number of data center locations",
+        "Higher price point than Vultr on raw infrastructure [2]",
+        "Less self-service/developer-focused tooling [4]",
+        "Smaller number of data center locations [4]",
         "Can be perceived as legacy by cloud-native buyers",
       ],
       opportunities: [
-        "Vultr customers outgrowing self-service as they scale",
-        "Regulated industries needing compliance Vultr can't provide",
-        "Companies burned by 3 AM outages without managed support",
-        "Hybrid/multi-cloud deals where Vultr is single-cloud",
+        "Vultr customers outgrowing self-service as they scale [4]",
+        "Regulated industries needing compliance Vultr can't provide [3]",
+        "Companies burned by 3 AM outages without managed support [1]",
+        "Hybrid/multi-cloud deals where Vultr is single-cloud [5]",
       ],
       threats: [
-        "Vultr's aggressive pricing attracts budget-conscious buyers",
-        "Developer preference for self-service simplicity",
+        "Vultr's aggressive pricing attracts budget-conscious buyers [2]",
+        "Developer preference for self-service simplicity [4]",
         "Perception that managed services are unnecessary overhead",
-        "Vultr expanding enterprise features over time",
+        "Vultr expanding enterprise features over time [4]",
       ],
     },
     verdict: "Rackspace wins on managed services, support, and compliance. Vultr wins on price and developer simplicity. For enterprise and regulated workloads, Rackspace is the clear choice.",
     rackspaceOverall: 8.1,
     competitorOverall: 5.1,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Managed Cloud Services", url: "https://www.rackspace.com/managed-cloud" },
+      { title: "Vultr Pricing", url: "https://www.vultr.com/pricing" },
+      { title: "Rackspace Compliance Certifications", url: "https://www.rackspace.com/security" },
+      { title: "Vultr Features Overview", url: "https://www.vultr.com/features" },
+      { title: "Rackspace Multi-Cloud Solutions", url: "https://www.rackspace.com/solutions" },
+    ],
   },
   ovhcloud: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 4 },
-      { label: "Enterprise Support", rackspace: 10, competitor: 5 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 4 },
+      { label: "Enterprise Spt.", rackspace: 10, competitor: 5 },
       { label: "Compliance", rackspace: 9, competitor: 7 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 3 },
       { label: "Pricing", rackspace: 5, competitor: 9 },
       { label: "Global Reach", rackspace: 8, competitor: 6 },
       { label: "Bare Metal", rackspace: 8, competitor: 9 },
-      { label: "Data Sovereignty", rackspace: 7, competitor: 9 },
+      { label: "Data Sovereign.", rackspace: 7, competitor: 9 },
     ],
     swot: {
       strengths: [
-        "Fanatical Experience\u2122 with dedicated account teams",
-        "Strong US market presence and FedRAMP authorization",
-        "Multi-cloud management across all major providers",
-        "Full-stack managed services depth",
-        "Enterprise track record with Fortune 500 companies",
+        "Fanatical Experience\u2122 with dedicated account teams [1]",
+        "Strong US market presence and FedRAMP authorization [3]",
+        "Multi-cloud management across all major providers [1]",
+        "Full-stack managed services depth [1]",
+        "Enterprise track record with Fortune 500 companies [1]",
       ],
       weaknesses: [
-        "Higher infrastructure pricing than OVHcloud",
-        "Smaller EU data center footprint",
-        "Less competitive on raw bare metal pricing",
-        "OVHcloud's SecNumCloud appeals to EU sovereignty buyers",
+        "Higher infrastructure pricing than OVHcloud [2]",
+        "Smaller EU data center footprint [4]",
+        "Less competitive on raw bare metal pricing [2]",
+        "OVHcloud's SecNumCloud appeals to EU sovereignty buyers [4]",
       ],
       opportunities: [
-        "OVHcloud customers needing US compliance (HIPAA, FedRAMP)",
-        "Concerns from OVHcloud's 2021 Strasbourg data center fire",
-        "Companies needing multi-cloud beyond OVHcloud's ecosystem",
-        "Enterprise buyers wanting dedicated managed support",
+        "OVHcloud customers needing US compliance (HIPAA, FedRAMP) [3]",
+        "Concerns from OVHcloud's 2021 Strasbourg data center fire [5]",
+        "Companies needing multi-cloud beyond OVHcloud's ecosystem [4]",
+        "Enterprise buyers wanting dedicated managed support [1]",
       ],
       threats: [
-        "OVHcloud's extremely competitive bare metal pricing",
-        "EU data sovereignty regulations favoring EU-based providers",
-        "OVHcloud building enterprise credibility in US market",
-        "Predictable pricing model (no egress fees) appeals to customers",
+        "OVHcloud's extremely competitive bare metal pricing [2]",
+        "EU data sovereignty regulations favoring EU-based providers [4]",
+        "OVHcloud building enterprise credibility in US market [4]",
+        "Predictable pricing model (no egress fees) appeals to customers [2]",
       ],
     },
     verdict: "Rackspace leads on managed services, US compliance, and multi-cloud. OVHcloud leads on price and EU sovereignty. For US enterprise workloads needing operational support, Rackspace wins.",
     rackspaceOverall: 8.3,
     competitorOverall: 6.5,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Managed Services", url: "https://www.rackspace.com/managed-cloud" },
+      { title: "OVHcloud Pricing", url: "https://www.ovhcloud.com/en/bare-metal/prices" },
+      { title: "Rackspace FedRAMP Authorization", url: "https://www.rackspace.com/security" },
+      { title: "OVHcloud Data Centers", url: "https://www.ovhcloud.com/en/about-us/datacenters" },
+      { title: "OVHcloud Strasbourg Incident Report", url: "https://www.ovhcloud.com/en/lp/strasbourg-incident" },
+    ],
   },
   digitalocean: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 4 },
-      { label: "Enterprise Support", rackspace: 10, competitor: 4 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 4 },
+      { label: "Enterprise Spt.", rackspace: 10, competitor: 4 },
       { label: "Compliance", rackspace: 9, competitor: 5 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 2 },
       { label: "Pricing", rackspace: 5, competitor: 8 },
       { label: "Global Reach", rackspace: 8, competitor: 6 },
-      { label: "Developer Experience", rackspace: 6, competitor: 9 },
-      { label: "SMB Friendliness", rackspace: 6, competitor: 9 },
+      { label: "Developer Exp.", rackspace: 6, competitor: 9 },
+      { label: "SMB Friendly", rackspace: 6, competitor: 9 },
     ],
     swot: {
       strengths: [
@@ -140,17 +163,24 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Rackspace excels at managed services and enterprise needs. DigitalOcean dominates developer experience and simplicity. Target DigitalOcean customers outgrowing self-service.",
     rackspaceOverall: 7.9,
     competitorOverall: 5.9,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+      { title: "DigitalOcean Pricing", url: "https://www.digitalocean.com/pricing" },
+      { title: "DigitalOcean Managed Kubernetes", url: "https://www.digitalocean.com/products/kubernetes" },
+      { title: "DigitalOcean Marketplace", url: "https://marketplace.digitalocean.com" },
+    ],
   },
   linode: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 3 },
-      { label: "Enterprise Support", rackspace: 10, competitor: 5 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 3 },
+      { label: "Enterprise Spt.", rackspace: 10, competitor: 5 },
       { label: "Compliance", rackspace: 9, competitor: 5 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 4 },
       { label: "Pricing", rackspace: 5, competitor: 8 },
       { label: "Global Reach", rackspace: 8, competitor: 8 },
       { label: "Edge/CDN", rackspace: 6, competitor: 9 },
-      { label: "Developer Experience", rackspace: 6, competitor: 7 },
+      { label: "Developer Exp.", rackspace: 6, competitor: 7 },
     ],
     swot: {
       strengths: [
@@ -182,17 +212,24 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Rackspace wins on managed services and compliance depth. Linode/Akamai wins on edge computing and CDN. Target customers needing managed operations, not just infrastructure.",
     rackspaceOverall: 7.9,
     competitorOverall: 6.1,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Managed Services", url: "https://www.rackspace.com/managed-cloud" },
+      { title: "Linode (Akamai) Pricing", url: "https://www.linode.com/pricing" },
+      { title: "Akamai Cloud Computing", url: "https://www.akamai.com/products/cloud-computing" },
+      { title: "Linode Developer Docs", url: "https://www.linode.com/docs" },
+    ],
   },
   hetzner: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 2 },
-      { label: "Enterprise Support", rackspace: 10, competitor: 3 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 2 },
+      { label: "Enterprise Spt.", rackspace: 10, competitor: 3 },
       { label: "Compliance", rackspace: 9, competitor: 4 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 1 },
       { label: "Pricing", rackspace: 4, competitor: 10 },
       { label: "Global Reach", rackspace: 8, competitor: 4 },
       { label: "Bare Metal", rackspace: 8, competitor: 8 },
-      { label: "Value for Money", rackspace: 6, competitor: 10 },
+      { label: "Value/Money", rackspace: 6, competitor: 10 },
     ],
     swot: {
       strengths: [
@@ -224,17 +261,24 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Rackspace wins decisively on managed services, compliance, and global reach. Hetzner wins massively on price. Never compete on price with Hetzner \u2014 sell the managed services story.",
     rackspaceOverall: 8.0,
     competitorOverall: 5.3,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+      { title: "Hetzner Cloud Pricing", url: "https://www.hetzner.com/cloud" },
+      { title: "Hetzner Dedicated Servers", url: "https://www.hetzner.com/dedicated-rootserver" },
+      { title: "Rackspace Compliance", url: "https://www.rackspace.com/security" },
+    ],
   },
   aws: {
     dimensions: [
-      { label: "Managed Services", rackspace: 9, competitor: 7 },
-      { label: "Personal Support", rackspace: 10, competitor: 5 },
+      { label: "Managed Svc.", rackspace: 9, competitor: 7 },
+      { label: "Personal Spt.", rackspace: 10, competitor: 5 },
       { label: "Compliance", rackspace: 9, competitor: 10 },
       { label: "Service Breadth", rackspace: 6, competitor: 10 },
-      { label: "Pricing Simplicity", rackspace: 7, competitor: 3 },
+      { label: "Pricing Simpl.", rackspace: 7, competitor: 3 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 3 },
-      { label: "Cost Optimization", rackspace: 8, competitor: 5 },
-      { label: "Ease of Management", rackspace: 8, competitor: 4 },
+      { label: "Cost Optimiz.", rackspace: 8, competitor: 5 },
+      { label: "Ease of Mgmt.", rackspace: 8, competitor: 4 },
     ],
     swot: {
       strengths: [
@@ -266,17 +310,24 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Position Rackspace as the expert layer ON TOP of AWS. We don't replace AWS \u2014 we make it manageable, cost-effective, and operationally excellent.",
     rackspaceOverall: 8.3,
     competitorOverall: 5.9,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace AWS Services", url: "https://www.rackspace.com/cloud/aws" },
+      { title: "AWS Pricing", url: "https://aws.amazon.com/pricing" },
+      { title: "AWS Support Plans", url: "https://aws.amazon.com/premiumsupport" },
+      { title: "AWS Service List", url: "https://aws.amazon.com/products" },
+    ],
   },
   gcp: {
     dimensions: [
-      { label: "Managed Services", rackspace: 9, competitor: 7 },
-      { label: "Personal Support", rackspace: 10, competitor: 5 },
+      { label: "Managed Svc.", rackspace: 9, competitor: 7 },
+      { label: "Personal Spt.", rackspace: 10, competitor: 5 },
       { label: "Compliance", rackspace: 9, competitor: 9 },
       { label: "Service Breadth", rackspace: 6, competitor: 9 },
-      { label: "Pricing Simplicity", rackspace: 7, competitor: 5 },
+      { label: "Pricing Simpl.", rackspace: 7, competitor: 5 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 4 },
-      { label: "AI/ML Capability", rackspace: 5, competitor: 10 },
-      { label: "Ease of Management", rackspace: 8, competitor: 5 },
+      { label: "AI/ML", rackspace: 5, competitor: 10 },
+      { label: "Ease of Mgmt.", rackspace: 8, competitor: 5 },
     ],
     swot: {
       strengths: [
@@ -308,15 +359,22 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Rackspace wins on managed support and multi-cloud. Google Cloud wins on AI/ML and data analytics. Position Rackspace as the operational partner that makes GCP enterprise-ready.",
     rackspaceOverall: 7.9,
     competitorOverall: 6.8,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Google Cloud Services", url: "https://www.rackspace.com/cloud/google" },
+      { title: "Google Cloud Pricing", url: "https://cloud.google.com/pricing" },
+      { title: "Google Cloud Support Plans", url: "https://cloud.google.com/support" },
+      { title: "Google Cloud Products", url: "https://cloud.google.com/products" },
+    ],
   },
   equinix: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 5 },
-      { label: "Enterprise Support", rackspace: 9, competitor: 7 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 5 },
+      { label: "Enterprise Spt.", rackspace: 9, competitor: 7 },
       { label: "Compliance", rackspace: 9, competitor: 8 },
       { label: "Cloud Services", rackspace: 9, competitor: 5 },
       { label: "Colocation", rackspace: 6, competitor: 10 },
-      { label: "Interconnection", rackspace: 6, competitor: 10 },
+      { label: "Interconnect.", rackspace: 6, competitor: 10 },
       { label: "Bare Metal", rackspace: 8, competitor: 9 },
       { label: "Global Reach", rackspace: 8, competitor: 10 },
     ],
@@ -350,17 +408,24 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Different strengths: Rackspace for managed cloud operations, Equinix for colocation and interconnection. Can be complementary rather than purely competitive.",
     rackspaceOverall: 8.1,
     competitorOverall: 8.0,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+      { title: "Equinix Metal Pricing", url: "https://deploy.equinix.com/metal/pricing" },
+      { title: "Equinix Data Centers", url: "https://www.equinix.com/data-centers" },
+      { title: "Equinix Fabric", url: "https://www.equinix.com/interconnection-services/equinix-fabric" },
+    ],
   },
   azure: {
     dimensions: [
-      { label: "Managed Services", rackspace: 9, competitor: 7 },
-      { label: "Personal Support", rackspace: 10, competitor: 6 },
+      { label: "Managed Svc.", rackspace: 9, competitor: 7 },
+      { label: "Personal Spt.", rackspace: 10, competitor: 6 },
       { label: "Compliance", rackspace: 9, competitor: 10 },
       { label: "Service Breadth", rackspace: 6, competitor: 10 },
-      { label: "Pricing Simplicity", rackspace: 7, competitor: 4 },
+      { label: "Pricing Simpl.", rackspace: 7, competitor: 4 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 3 },
       { label: "Hybrid Cloud", rackspace: 8, competitor: 9 },
-      { label: "Ease of Management", rackspace: 8, competitor: 5 },
+      { label: "Ease of Mgmt.", rackspace: 8, competitor: 5 },
     ],
     swot: {
       strengths: [
@@ -392,11 +457,18 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Position Rackspace as the expert operational layer ON TOP of Azure. We don't replace Azure — we make it manageable, cost-effective, and operationally excellent. Strong play against Azure's notoriously complex billing and management.",
     rackspaceOverall: 8.3,
     competitorOverall: 6.3,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Rackspace Azure Services", url: "https://www.rackspace.com/cloud/azure" },
+      { title: "Azure Pricing Calculator", url: "https://azure.microsoft.com/en-us/pricing/calculator" },
+      { title: "Azure Support Plans", url: "https://azure.microsoft.com/en-us/support/plans" },
+      { title: "Azure Products", url: "https://azure.microsoft.com/en-us/products" },
+    ],
   },
   ibmcloud: {
     dimensions: [
-      { label: "Managed Services", rackspace: 9, competitor: 8 },
-      { label: "Enterprise Support", rackspace: 9, competitor: 8 },
+      { label: "Managed Svc.", rackspace: 9, competitor: 8 },
+      { label: "Enterprise Spt.", rackspace: 9, competitor: 8 },
       { label: "Compliance", rackspace: 9, competitor: 9 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 6 },
       { label: "Pricing", rackspace: 6, competitor: 5 },
@@ -434,17 +506,24 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Rackspace wins on multi-cloud flexibility, support quality, and operational agility. IBM wins on AI/ML (watsonx), legacy enterprise relationships, and hybrid via Red Hat. Target IBM customers frustrated by complexity and slow pace of innovation.",
     rackspaceOverall: 7.9,
     competitorOverall: 7.1,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "IBM Cloud Products", url: "https://www.ibm.com/cloud/products" },
+      { title: "IBM Cloud Pricing", url: "https://www.ibm.com/cloud/pricing" },
+      { title: "IBM watsonx", url: "https://www.ibm.com/watsonx" },
+      { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+    ],
   },
   oci: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 6 },
-      { label: "Enterprise Support", rackspace: 9, competitor: 7 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 6 },
+      { label: "Enterprise Spt.", rackspace: 9, competitor: 7 },
       { label: "Compliance", rackspace: 9, competitor: 9 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 4 },
       { label: "Pricing", rackspace: 5, competitor: 8 },
       { label: "Database", rackspace: 6, competitor: 10 },
       { label: "Bare Metal", rackspace: 8, competitor: 8 },
-      { label: "Ease of Management", rackspace: 8, competitor: 5 },
+      { label: "Ease of Mgmt.", rackspace: 8, competitor: 5 },
     ],
     swot: {
       strengths: [
@@ -476,17 +555,24 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Rackspace wins on multi-cloud, managed services breadth, and freedom from Oracle lock-in. OCI wins for Oracle Database workloads and aggressive pricing. Target customers seeking to diversify beyond Oracle's ecosystem.",
     rackspaceOverall: 8.0,
     competitorOverall: 7.1,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Oracle Cloud Pricing", url: "https://www.oracle.com/cloud/pricing" },
+      { title: "Oracle Autonomous Database", url: "https://www.oracle.com/autonomous-database" },
+      { title: "OCI Services", url: "https://www.oracle.com/cloud/networking" },
+      { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+    ],
   },
   cloudflare: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 3 },
-      { label: "Enterprise Support", rackspace: 10, competitor: 5 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 3 },
+      { label: "Enterprise Spt.", rackspace: 10, competitor: 5 },
       { label: "Compliance", rackspace: 9, competitor: 6 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 2 },
       { label: "Edge/CDN", rackspace: 5, competitor: 10 },
       { label: "Security", rackspace: 7, competitor: 9 },
-      { label: "Compute Flexibility", rackspace: 9, competitor: 5 },
-      { label: "Developer Experience", rackspace: 5, competitor: 9 },
+      { label: "Compute Flex.", rackspace: 9, competitor: 5 },
+      { label: "Developer Exp.", rackspace: 5, competitor: 9 },
     ],
     swot: {
       strengths: [
@@ -518,11 +604,18 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Different focus areas: Rackspace for managed cloud infrastructure and operations, Cloudflare for edge computing, CDN, and security. Can be complementary — position Rackspace for core workloads and Cloudflare for edge delivery.",
     rackspaceOverall: 8.0,
     competitorOverall: 6.1,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Cloudflare Products", url: "https://www.cloudflare.com/products" },
+      { title: "Cloudflare Workers", url: "https://workers.cloudflare.com" },
+      { title: "Cloudflare R2 Storage", url: "https://www.cloudflare.com/products/r2" },
+      { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+    ],
   },
   leaseweb: {
     dimensions: [
-      { label: "Managed Services", rackspace: 10, competitor: 5 },
-      { label: "Enterprise Support", rackspace: 10, competitor: 5 },
+      { label: "Managed Svc.", rackspace: 10, competitor: 5 },
+      { label: "Enterprise Spt.", rackspace: 10, competitor: 5 },
       { label: "Compliance", rackspace: 9, competitor: 6 },
       { label: "Multi-Cloud", rackspace: 9, competitor: 2 },
       { label: "Pricing", rackspace: 5, competitor: 8 },
@@ -560,14 +653,21 @@ const SCORES: Record<string, CompetitorScores> = {
     verdict: "Rackspace wins decisively on managed services, compliance, and multi-cloud. Leaseweb competes on infrastructure pricing and bandwidth. Target Leaseweb customers outgrowing basic hosting who need enterprise-grade managed operations.",
     rackspaceOverall: 8.5,
     competitorOverall: 5.9,
+    lastUpdated: "Q1 2026",
+    sources: [
+      { title: "Leaseweb Dedicated Servers", url: "https://www.leaseweb.com/dedicated-servers" },
+      { title: "Leaseweb Cloud Hosting", url: "https://www.leaseweb.com/cloud/public-cloud" },
+      { title: "Leaseweb Data Centers", url: "https://www.leaseweb.com/platform/data-centers" },
+      { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+    ],
   },
 };
 
 // Fallback for competitors without specific scoring data
 const DEFAULT_SCORES: CompetitorScores = {
   dimensions: [
-    { label: "Managed Services", rackspace: 10, competitor: 5 },
-    { label: "Enterprise Support", rackspace: 10, competitor: 5 },
+    { label: "Managed Svc.", rackspace: 10, competitor: 5 },
+    { label: "Enterprise Spt.", rackspace: 10, competitor: 5 },
     { label: "Compliance", rackspace: 9, competitor: 5 },
     { label: "Multi-Cloud", rackspace: 9, competitor: 5 },
     { label: "Pricing", rackspace: 5, competitor: 7 },
@@ -582,6 +682,11 @@ const DEFAULT_SCORES: CompetitorScores = {
   verdict: "Rackspace's managed services and enterprise support are the key differentiators. Focus on the value of operational excellence over raw infrastructure cost.",
   rackspaceOverall: 8.0,
   competitorOverall: 5.5,
+  lastUpdated: "Q1 2026",
+  sources: [
+    { title: "Rackspace Managed Cloud", url: "https://www.rackspace.com/managed-cloud" },
+    { title: "Rackspace Compliance", url: "https://www.rackspace.com/security" },
+  ],
 };
 
 export function getCompetitorScores(slug: string): CompetitorScores {

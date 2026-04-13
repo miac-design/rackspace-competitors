@@ -100,15 +100,15 @@ export default function StructuredReport({
             competitorScore={scores.competitorOverall}
             competitorName={competitorName}
           />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-            <div className="rounded-xl border border-gray-100 bg-white p-4">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 items-start">
+            <div className="lg:col-span-3 rounded-xl border border-gray-100 bg-white p-4">
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Competitive Radar</h3>
               <RadarChart
                 dimensions={scores.dimensions}
                 competitorName={competitorName}
               />
             </div>
-            <div className="rounded-xl border border-gray-100 bg-white p-4">
+            <div className="lg:col-span-2 rounded-xl border border-gray-100 bg-white p-4">
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Category Scores</h3>
               <ScoreCard
                 scores={scores.dimensions.map((d) => ({

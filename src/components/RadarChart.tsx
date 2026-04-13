@@ -54,7 +54,7 @@ export default function RadarChart({ dimensions, competitorName }: RadarChartPro
 
   return (
     <div className="w-full max-w-[400px] mx-auto">
-      <svg viewBox="0 0 400 440" className="w-full h-auto">
+      <svg viewBox="-80 -10 560 460" className="w-full h-auto" overflow="visible">
         {/* Background rings */}
         {Array.from({ length: RINGS }, (_, i) => {
           const r = ((i + 1) / RINGS) * RADIUS;

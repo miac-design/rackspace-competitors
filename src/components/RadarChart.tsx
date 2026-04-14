@@ -53,8 +53,8 @@ export default function RadarChart({ dimensions, competitorName }: RadarChartPro
   const competitorPoints = buildPolygonPoints(competitorValues, count);
 
   return (
-    <div className="w-full max-w-[400px] mx-auto">
-      <svg viewBox="0 0 400 440" className="w-full h-auto">
+    <div className="w-full max-w-[480px] mx-auto">
+      <svg viewBox="-70 0 540 440" className="w-full h-auto">
         {/* Background rings */}
         {Array.from({ length: RINGS }, (_, i) => {
           const r = ((i + 1) / RINGS) * RADIUS;

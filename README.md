@@ -78,3 +78,10 @@ npm run dev
 ```
 
 Copy `.env.example` to `.env.local` to configure Engine B and connectors.
+
+## Deploy
+
+Production deploys from `main` to <https://rackspace-competitors.vercel.app>.
+The app runs with no environment configuration: Engine B falls back to cited
+approved content, and connector defaults keep every unwired source flagged
+"not connected".

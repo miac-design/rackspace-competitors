@@ -56,6 +56,21 @@ export default function EntryView({ onSelect }: { onSelect: (slug: string) => vo
         )}
       </div>
 
+      {/* Legend explaining the freshness dot on each competitor */}
+      <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-lg bg-gray-50 px-3 py-2 text-[11px] text-gray-500">
+        <span className="font-semibold text-gray-600">Dot = intel freshness:</span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-emerald-500" /> Fresh
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-amber-500" /> Review soon
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-red-500" /> Stale
+        </span>
+        <span className="text-gray-400">— how recently the data was reviewed or pulled, not who&apos;s winning.</span>
+      </div>
+
       <div className="space-y-2 stagger-children">
         {filtered.map((r) => {
           const fresh = getCompetitorFreshness(r.competitor.slug);

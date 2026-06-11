@@ -1,45 +1,8 @@
-export interface Competitor {
-  slug: string;
-  name: string;
-  logoUrl: string;
-  color: string;
-}
-
-export interface ServiceArea {
-  slug: string;
-  name: string;
-  icon: string; // Lucide icon name
-}
-
-export type OutputType =
-  | "full"
-  | "comparison"
-  | "strengths"
-  | "weaknesses"
-  | "objections"
-  | "pricing";
-
-export interface OutputTypeOption {
-  slug: OutputType;
-  name: string;
-  description: string;
-}
-
-export type IntelRequest =
-  | { mode: "chat"; message: string; history: ChatMessage[] }
-  | {
-      mode: "structured";
-      competitors: string[];
-      serviceAreas: string[];
-      outputType: OutputType;
-      context?: string;
-    };
+// Re-export the domain Competitor so existing imports keep working, and keep
+// the chat message shape used by Engine B.
+export type { Competitor } from "@/lib/data/types";
 
 export interface ChatMessage {
   role: "user" | "assistant";
-  content: string;
-}
-
-export interface IntelResponse {
   content: string;
 }

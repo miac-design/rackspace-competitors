@@ -45,7 +45,7 @@ export default function Home() {
         {view === "sales" && slug && (
           <SalesView slug={slug} onBack={() => setView("entry")} />
         )}
-        {view === "product" && <ProductView onSelect={openCompetitor} />}
+        {view === "product" && <ProductView />}
       </main>
 
       <DataSourcesPanel />

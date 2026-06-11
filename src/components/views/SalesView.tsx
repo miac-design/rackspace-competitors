@@ -69,13 +69,16 @@ export default function SalesView({
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-6">
-      <button
-        onClick={onBack}
-        className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 transition-colors hover:text-[#C8102E]"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        All competitors
-      </button>
+      {/* Sticky back bar — stays visible while scrolling deep into the card */}
+      <div className="sticky top-0 z-20 -mx-4 mb-4 bg-[#f8f9fb]/90 glass px-4 py-2">
+        <button
+          onClick={onBack}
+          className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-1.5 text-sm font-medium text-gray-600 shadow-sm transition-colors hover:border-[#C8102E]/30 hover:text-[#C8102E]"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          All competitors
+        </button>
+      </div>
 
       {/* Competitor header */}
       <div className="mb-4 flex items-center gap-3">
@@ -116,12 +119,7 @@ export default function SalesView({
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <SectionTitle icon={Swords}>Position</SectionTitle>
             {position ? (
-              <>
-                <p className="text-sm leading-relaxed text-gray-800">{position.body}</p>
-                <div className="mt-2">
-                  <SourceLine provenance={position} />
-                </div>
-              </>
+              <p className="text-sm leading-relaxed text-gray-800">{position.body}</p>
             ) : (
               <NotConnected connectorId="approved-content" />
             )}
@@ -137,9 +135,6 @@ export default function SalesView({
                     {topObjection.rebuttal.body}
                   </p>
                 )}
-                <div className="mt-2">
-                  <SourceLine provenance={topObjection.objection} />
-                </div>
               </div>
             )}
 
@@ -168,9 +163,6 @@ export default function SalesView({
                         {rebuttal && (
                           <p className="mt-1 text-sm leading-relaxed text-gray-700">{rebuttal.body}</p>
                         )}
-                        <div className="mt-1.5">
-                          <SourceLine provenance={objection} />
-                        </div>
                       </div>
                     ))}
                   </div>
@@ -181,12 +173,7 @@ export default function SalesView({
               <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
                 <SectionTitle icon={DollarSign}>Pricing counter</SectionTitle>
                 {pricing ? (
-                  <>
-                    <p className="text-sm leading-relaxed text-gray-800">{pricing.body}</p>
-                    <div className="mt-2">
-                      <SourceLine provenance={pricing} />
-                    </div>
-                  </>
+                  <p className="text-sm leading-relaxed text-gray-800">{pricing.body}</p>
                 ) : (
                   <NotConnected connectorId="approved-content" />
                 )}
@@ -291,9 +278,6 @@ export default function SalesView({
                   <FeatureGapTable gaps={gaps} />
                   <div className="mt-4">
                     <RadarChart dimensions={radarDims} competitorName={competitor.name} />
-                  </div>
-                  <div className="mt-2">
-                    <SourceLine provenance={gaps[0]} />
                   </div>
                 </div>
               )}

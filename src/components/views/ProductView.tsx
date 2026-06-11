@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { BarChart3, Percent, LineChart, Newspaper, Layers, ChevronRight, ChevronDown, ExternalLink } from "lucide-react";
 import CompetitorLogo from "@/components/CompetitorLogo";
 import NotConnected from "@/components/NotConnected";
-import SourceLine from "@/components/SourceLine";
 import FeatureGapTable from "@/components/FeatureGapTable";
 import RadarChart from "@/components/RadarChart";
 import { getCompetitors, getFeatureGaps, getAllIntelEvents } from "@/lib/data/repository";
@@ -104,7 +103,6 @@ export default function ProductView() {
                   <div className="space-y-4 border-t border-gray-100 px-3 py-4 animate-fade-in">
                     <FeatureGapTable gaps={row.gaps} />
                     <RadarChart dimensions={radarDims} competitorName={row.competitor.name} />
-                    {row.gaps[0] && <SourceLine provenance={row.gaps[0]} />}
                   </div>
                 )}
               </div>

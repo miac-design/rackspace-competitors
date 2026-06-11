@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f8f9fb]">
-      <Header />
+      <Header onHome={() => setView("entry")} />
 
       <div className="flex items-center justify-center gap-1 border-b border-gray-100 bg-white/60 glass px-4 py-2">
         <NavTab

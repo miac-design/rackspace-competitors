@@ -2,13 +2,18 @@
 
 import { Swords } from "lucide-react";
 
-export default function Header() {
+export default function Header({ onHome }: { onHome?: () => void }) {
   return (
     <header className="relative bg-white border-b border-gray-100">
       {/* Top accent gradient line */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C8102E] via-[#e8384f] to-[#C8102E]" />
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-6 py-3">
-        <div className="flex items-center gap-3.5">
+        <button
+          type="button"
+          onClick={onHome}
+          className="flex items-center gap-3.5 text-left transition-opacity hover:opacity-80"
+          title="Back to home"
+        >
           <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#C8102E] to-[#a00d24] shadow-md shadow-red-200/50">
             <Swords className="h-5 w-5 text-white" />
           </div>
@@ -20,7 +25,7 @@ export default function Header() {
               Rackspace Technology &mdash; Sales Enablement
             </p>
           </div>
-        </div>
+        </button>
       </div>
     </header>
   );

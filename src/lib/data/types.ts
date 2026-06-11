@@ -89,6 +89,17 @@ export interface PricingSnapshot {
   fetchedAt: string;
 }
 
+// Review & analyst sentiment (G2, Gartner Peer Insights).
+export interface Review {
+  competitorId: string;
+  provider: string; // "G2" | "Gartner Peer Insights"
+  rating: number; // out of 5
+  reviewCount?: number;
+  sourceUrl?: string;
+  source: string;
+  fetchedAt: string;
+}
+
 // A single line in a freshness breakdown ("pricing: 4d · positioning: 12d").
 export interface FreshnessItem {
   label: string;

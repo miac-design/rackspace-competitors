@@ -10,6 +10,7 @@
 // configuration change, not a code change.
 
 import { DataType } from "./types";
+import { PUBLIC_FETCHED_AT } from "./public-sources";
 
 export interface Connector {
   id: string;
@@ -21,6 +22,8 @@ export interface Connector {
   feeds: string[];
   // Where the data would come from once wired.
   integration: string;
+  // When this source was last pulled (for public-sourced connectors).
+  lastSyncAt?: string;
 }
 
 // NEXT_PUBLIC_* flags are readable on the client; presence flips a connector on.
@@ -61,9 +64,10 @@ export const CONNECTORS: Connector[] = [
     description:
       "Each competitor's public pricing. Drives the pricing counter and pricing feature rows.",
     cadence: "Weekly",
-    connected: flag("NEXT_PUBLIC_PRICING_CONNECTED", false),
+    connected: flag("NEXT_PUBLIC_PRICING_CONNECTED", true),
     feeds: ["Pricing counter", "Pricing rows"],
-    integration: "Pricing pages / pricing-intel feed",
+    integration: "Public pricing pages",
+    lastSyncAt: PUBLIC_FETCHED_AT,
   },
   {
     id: "reviews",
@@ -72,9 +76,10 @@ export const CONNECTORS: Connector[] = [
     description:
       "Ratings and recent review themes per competitor. Drives sentiment signals and feature-gap context.",
     cadence: "Weekly",
-    connected: flag("NEXT_PUBLIC_REVIEWS_CONNECTED", false),
+    connected: flag("NEXT_PUBLIC_REVIEWS_CONNECTED", true),
     feeds: ["Sentiment", "Feature-gap context"],
     integration: "G2 / Gartner Peer Insights",
+    lastSyncAt: PUBLIC_FETCHED_AT,
   },
   {
     id: "news",
@@ -83,9 +88,10 @@ export const CONNECTORS: Connector[] = [
     description:
       "Recent intel with real dates from news and competitor changelogs.",
     cadence: "Daily",
-    connected: flag("NEXT_PUBLIC_NEWS_CONNECTED", false),
+    connected: flag("NEXT_PUBLIC_NEWS_CONNECTED", true),
     feeds: ["Recent intel feed"],
-    integration: "RSS / news API / changelogs",
+    integration: "Public news & changelogs",
+    lastSyncAt: PUBLIC_FETCHED_AT,
   },
 ];
 

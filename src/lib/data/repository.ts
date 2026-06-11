@@ -4,6 +4,7 @@
 // so "not connected" is explicit and can never masquerade as real data.
 
 import { COMPETITORS, CLAIMS, FEATURE_GAPS } from "./seed";
+import { PRICING_SNAPSHOTS, REVIEWS, INTEL_EVENTS } from "./public-sources";
 import { isConnected } from "./connectors";
 import { computeFreshness, summarize } from "./freshness";
 import {
@@ -11,6 +12,7 @@ import {
   Claim,
   FeatureGap,
   Metric,
+  Review,
   IntelEvent,
   PricingSnapshot,
   FreshnessItem,
@@ -93,16 +95,28 @@ export function getCompetitorFreshness(competitorId: string): FreshnessSummary {
     });
   }
 
-  // Pricing — not connected in Phase 1.
-  items.push({
-    label: "Pricing",
-    dataType: "pricing",
-    status: "red",
-    ageDays: null,
-    connected: isConnected("pricing"),
-  });
+  // Pricing — public-sourced. Freshness computed from the snapshot's fetched_at.
+  const snapshot = PRICING_SNAPSHOTS.find((p) => p.competitorId === competitorId);
+  if (isConnected("pricing") && snapshot) {
+    const f = computeFreshness("pricing", snapshot.fetchedAt);
+    items.push({
+      label: "Pricing",
+      dataType: "pricing",
+      status: f.status,
+      ageDays: f.ageDays,
+      connected: true,
+    });
+  } else {
+    items.push({
+      label: "Pricing",
+      dataType: "pricing",
+      status: "red",
+      ageDays: null,
+      connected: false,
+    });
+  }
 
-  // Win/loss — not connected in Phase 1.
+  // Win/loss — CRM not connected.
   items.push({
     label: "Win/loss",
     dataType: "winloss",
@@ -166,18 +180,33 @@ export function getWinRate(competitorId: string): SourceResult<WinRate> {
   };
 }
 
-// ---- Other not-connected sources ----
-
-export function getIntelEvents(competitorId: string): SourceResult<IntelEvent[]> {
-  if (!isConnected("news")) return { connected: false, connectorId: "news" };
-  void competitorId;
-  return { connected: true, connectorId: "news", data: [] };
-}
+// ---- Public-sourced data (pricing, reviews, news) ----
 
 export function getPricingSnapshots(
   competitorId: string
 ): SourceResult<PricingSnapshot[]> {
   if (!isConnected("pricing")) return { connected: false, connectorId: "pricing" };
-  void competitorId;
-  return { connected: true, connectorId: "pricing", data: [] };
+  const data = PRICING_SNAPSHOTS.filter((p) => p.competitorId === competitorId);
+  return { connected: true, connectorId: "pricing", data };
+}
+
+export function getReviews(competitorId: string): SourceResult<Review[]> {
+  if (!isConnected("reviews")) return { connected: false, connectorId: "reviews" };
+  const data = REVIEWS.filter((r) => r.competitorId === competitorId);
+  return { connected: true, connectorId: "reviews", data };
+}
+
+export function getIntelEvents(competitorId: string): SourceResult<IntelEvent[]> {
+  if (!isConnected("news")) return { connected: false, connectorId: "news" };
+  const data = INTEL_EVENTS.filter((e) => e.competitorId === competitorId).sort(
+    (a, b) => b.date.localeCompare(a.date)
+  );
+  return { connected: true, connectorId: "news", data };
+}
+
+// All competitors' intel, newest first — drives the Product Trends feed.
+export function getAllIntelEvents(): SourceResult<IntelEvent[]> {
+  if (!isConnected("news")) return { connected: false, connectorId: "news" };
+  const data = [...INTEL_EVENTS].sort((a, b) => b.date.localeCompare(a.date));
+  return { connected: true, connectorId: "news", data };
 }

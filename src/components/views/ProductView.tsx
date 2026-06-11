@@ -1,13 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { BarChart3, Percent, LineChart, Newspaper, Layers, ChevronRight, ChevronDown } from "lucide-react";
+import { BarChart3, Percent, LineChart, Newspaper, Layers, ChevronRight, ChevronDown, ExternalLink } from "lucide-react";
 import CompetitorLogo from "@/components/CompetitorLogo";
 import NotConnected from "@/components/NotConnected";
 import SourceLine from "@/components/SourceLine";
 import FeatureGapTable from "@/components/FeatureGapTable";
 import RadarChart from "@/components/RadarChart";
-import { getCompetitors, getFeatureGaps } from "@/lib/data/repository";
+import { getCompetitors, getFeatureGaps, getAllIntelEvents } from "@/lib/data/repository";
+import { formatReviewedDate, computeFreshness, STATUS_META } from "@/lib/data/freshness";
 
 function SectionTitle({ icon: Icon, children }: { icon: typeof BarChart3; children: React.ReactNode }) {
   return (
@@ -22,6 +23,11 @@ function SectionTitle({ icon: Icon, children }: { icon: typeof BarChart3; childr
 // its feature comparison inline — it never navigates away to Battle Cards.
 export default function ProductView() {
   const competitors = useMemo(() => getCompetitors(), []);
+  const intel = useMemo(() => getAllIntelEvents(), []);
+  const byId = useMemo(
+    () => Object.fromEntries(competitors.map((c) => [c.slug, c])),
+    [competitors]
+  );
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
   const coverage = competitors.map((c) => {
@@ -107,10 +113,39 @@ export default function ProductView() {
         </div>
       </div>
 
-      {/* Intel feed — news */}
+      {/* Intel feed — public news, newest first */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <SectionTitle icon={Newspaper}>Recent intel</SectionTitle>
-        <NotConnected connectorId="news" />
+        {intel.connected ? (
+          <ul className="divide-y divide-gray-100">
+            {intel.data.map((e) => {
+              const c = byId[e.competitorId];
+              const f = computeFreshness("news", e.fetchedAt);
+              return (
+                <li key={e.headline} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
+                  {c && <CompetitorLogo competitor={c} size={20} />}
+                  <div className="min-w-0 flex-1">
+                    <a
+                      href={e.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-start gap-1.5 text-sm font-medium text-gray-800 hover:text-[#C8102E]"
+                    >
+                      <span>{e.headline}</span>
+                      <ExternalLink className="mt-0.5 h-3 w-3 shrink-0 opacity-40 group-hover:opacity-100" />
+                    </a>
+                    <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-gray-400">
+                      <span className={`h-1.5 w-1.5 rounded-full ${STATUS_META[f.status].dot}`} />
+                      {c?.name ?? e.competitorId} · {e.source} · {formatReviewedDate(e.date)}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <NotConnected connectorId="news" />
+        )}
       </div>
     </div>
   );

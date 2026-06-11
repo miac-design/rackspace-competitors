@@ -10,6 +10,7 @@
 
 import {
   getCompetitor, getPositioning, getObjections, getPricingCounter, getFeatureGaps,
+  getPricingSnapshots, getReviews, getIntelEvents,
 } from "@/lib/data/repository";
 import { formatReviewedDate } from "@/lib/data/freshness";
 import { Claim } from "@/lib/data/types";
@@ -50,6 +51,30 @@ function buildGrounding(slug: string): { context: string; hasContent: boolean } 
       lines.push(`- ${g.capability}: Rackspace ${g.rackspaceScore}, ${competitor.name} ${g.competitorScore} (${g.status}) ${cite(g as unknown as Claim)}`)
     );
   }
+
+  // Public-sourced facts — pricing, sentiment, news. Cite the URL + fetch date.
+  const pricingSnaps = getPricingSnapshots(slug);
+  if (pricingSnaps.connected && pricingSnaps.data.length) {
+    lines.push(`\n## ${competitor.name} public pricing`);
+    pricingSnaps.data.forEach((p) =>
+      lines.push(`- ${p.plan}: ${p.price} (${p.source} · ${p.sourceUrl} · fetched ${formatReviewedDate(p.fetchedAt)})`)
+    );
+  }
+  const reviews = getReviews(slug);
+  if (reviews.connected && reviews.data.length) {
+    lines.push(`\n## ${competitor.name} review sentiment`);
+    reviews.data.forEach((r) =>
+      lines.push(`- ${r.provider}: ${r.rating}/5${r.reviewCount ? ` (${r.reviewCount} reviews)` : ""} (${r.sourceUrl} · fetched ${formatReviewedDate(r.fetchedAt)})`)
+    );
+  }
+  const intel = getIntelEvents(slug);
+  if (intel.connected && intel.data.length) {
+    lines.push(`\n## Recent ${competitor.name} news`);
+    intel.data.forEach((e) =>
+      lines.push(`- ${formatReviewedDate(e.date)}: ${e.headline} (${e.source} · ${e.sourceUrl})`)
+    );
+  }
+
   return { context: lines.join("\n"), hasContent: Boolean(position || objections.length) };
 }
 
@@ -70,7 +95,30 @@ function fallbackAnswer(slug: string): string {
     });
   }
   if (pricing) parts.push(`## Pricing counter\n${pricing.body}\n\n**Source:** ${cite(pricing)}`);
-  parts.push(`_No live pricing, CRM win/loss or news is included — those sources are not connected._`);
+
+  const pricingSnaps = getPricingSnapshots(slug);
+  if (pricingSnaps.connected && pricingSnaps.data.length) {
+    const rows = pricingSnaps.data
+      .map((p) => `- **${p.plan}:** ${p.price} — [${p.source}](${p.sourceUrl}) · fetched ${formatReviewedDate(p.fetchedAt)}`)
+      .join("\n");
+    parts.push(`## Public pricing\n${rows}`);
+  }
+  const reviews = getReviews(slug);
+  if (reviews.connected && reviews.data.length) {
+    const rows = reviews.data
+      .map((r) => `- **${r.provider}:** ${r.rating}/5${r.reviewCount ? ` (${r.reviewCount} reviews)` : ""} — [source](${r.sourceUrl}) · fetched ${formatReviewedDate(r.fetchedAt)}`)
+      .join("\n");
+    parts.push(`## Review sentiment\n${rows}`);
+  }
+  const intel = getIntelEvents(slug);
+  if (intel.connected && intel.data.length) {
+    const rows = intel.data
+      .map((e) => `- ${formatReviewedDate(e.date)}: [${e.headline}](${e.sourceUrl}) — ${e.source}`)
+      .join("\n");
+    parts.push(`## Recent news\n${rows}`);
+  }
+
+  parts.push(`_CRM win/loss is not connected, so deal counts and win-rate are not included._`);
   return parts.join("\n\n");
 }
 

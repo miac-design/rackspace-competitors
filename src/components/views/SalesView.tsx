@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import {
   ArrowLeft, ChevronDown, MessageSquareQuote, ShieldQuestion,
-  DollarSign, Swords, Sparkles, LayoutGrid,
+  DollarSign, Swords, Sparkles, LayoutGrid, Star, Newspaper, ExternalLink,
 } from "lucide-react";
 import CompetitorLogo from "@/components/CompetitorLogo";
 import FreshnessPill from "@/components/FreshnessPill";
@@ -14,8 +14,10 @@ import RadarChart from "@/components/RadarChart";
 import ChatPanel from "@/components/ChatPanel";
 import {
   getCompetitor, getPositioning, getObjections, getPricingCounter,
-  getFeatureGaps, getCompetitorFreshness,
+  getFeatureGaps, getCompetitorFreshness, getPricingSnapshots, getReviews,
+  getIntelEvents,
 } from "@/lib/data/repository";
+import { formatReviewedDate } from "@/lib/data/freshness";
 
 function SectionTitle({ icon: Icon, children }: { icon: typeof Swords; children: React.ReactNode }) {
   return (
@@ -42,6 +44,9 @@ export default function SalesView({
   const pricing = useMemo(() => getPricingCounter(slug), [slug]);
   const gaps = useMemo(() => getFeatureGaps(slug), [slug]);
   const freshness = useMemo(() => getCompetitorFreshness(slug), [slug]);
+  const pricingSnapshots = useMemo(() => getPricingSnapshots(slug), [slug]);
+  const reviews = useMemo(() => getReviews(slug), [slug]);
+  const intel = useMemo(() => getIntelEvents(slug), [slug]);
 
   if (!competitor) {
     return (
@@ -189,8 +194,94 @@ export default function SalesView({
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
                     Live competitor pricing
                   </p>
-                  <NotConnected connectorId="pricing" />
+                  {pricingSnapshots.connected && pricingSnapshots.data.length > 0 ? (
+                    <div className="space-y-2">
+                      {pricingSnapshots.data.map((p) => (
+                        <div key={p.plan} className="rounded-lg border border-gray-100 bg-gray-50/60 px-3 py-2">
+                          <div className="flex items-baseline justify-between gap-3">
+                            <span className="text-sm text-gray-700">{p.plan}</span>
+                            <span className="text-sm font-bold text-gray-900">{p.price}</span>
+                          </div>
+                          <div className="mt-1">
+                            <SourceLine provenance={p} dataType="pricing" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : pricingSnapshots.connected ? (
+                    <p className="rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-500">
+                      No public pricing published — {competitor.name} pricing is quote/console-only.
+                    </p>
+                  ) : (
+                    <NotConnected connectorId="pricing" />
+                  )}
                 </div>
+              </div>
+
+              {/* Reviews & analyst sentiment */}
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                <SectionTitle icon={Star}>Reviews &amp; sentiment</SectionTitle>
+                {reviews.connected && reviews.data.length > 0 ? (
+                  <div className="space-y-2">
+                    {reviews.data.map((r) => (
+                      <div key={r.provider} className="rounded-lg border border-gray-100 bg-gray-50/60 px-3 py-2">
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm font-medium text-gray-700">{r.provider}</span>
+                          <span className="inline-flex items-center gap-1 text-sm font-bold text-gray-900">
+                            <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                            {r.rating.toFixed(1)}
+                            <span className="text-xs font-normal text-gray-400">/ 5</span>
+                            {r.reviewCount && (
+                              <span className="ml-1 text-xs font-normal text-gray-400">
+                                ({r.reviewCount.toLocaleString()})
+                              </span>
+                            )}
+                          </span>
+                        </div>
+                        <div className="mt-1">
+                          <SourceLine provenance={r} dataType="pricing" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : reviews.connected ? (
+                  <p className="rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-500">
+                    No public G2 / Gartner rating surfaced for {competitor.name}.
+                  </p>
+                ) : (
+                  <NotConnected connectorId="reviews" />
+                )}
+              </div>
+
+              {/* Recent intel */}
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                <SectionTitle icon={Newspaper}>Recent intel</SectionTitle>
+                {intel.connected && intel.data.length > 0 ? (
+                  <ul className="space-y-2.5">
+                    {intel.data.map((e) => (
+                      <li key={e.headline} className="border-l-2 border-gray-100 pl-3">
+                        <a
+                          href={e.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex items-start gap-1.5 text-sm text-gray-800 hover:text-[#C8102E]"
+                        >
+                          <span>{e.headline}</span>
+                          <ExternalLink className="mt-0.5 h-3 w-3 shrink-0 opacity-40 group-hover:opacity-100" />
+                        </a>
+                        <p className="mt-0.5 text-[11px] text-gray-400">
+                          {e.source} · {formatReviewedDate(e.date)}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : intel.connected ? (
+                  <p className="rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-500">
+                    No recent intel on record for {competitor.name}.
+                  </p>
+                ) : (
+                  <NotConnected connectorId="news" />
+                )}
               </div>
 
               {/* Feature gaps */}
